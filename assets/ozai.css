@@ -12,7 +12,7 @@
   --stone:       oklch(0.62 0.02 60);
   --ink:         oklch(0.205 0.014 56);
   --ink-soft:    oklch(0.34 0.018 52);
-  --ink-mute:    oklch(0.52 0.016 56);
+  --ink-mute:    oklch(0.47 0.016 56);
   --char:        oklch(0.215 0.018 45);
   --char-2:      oklch(0.26 0.022 42);
   --terra:       oklch(0.585 0.155 38);
@@ -323,5 +323,38 @@ footer { padding: 52px 0 40px; border-top: 1px solid var(--line); background: va
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .reveal, .stagger > * { opacity: 1; transform: none; }
   .w > span { transform: none; }
+  .marquee-track { animation: none; }
   .hero-canvas, .grain, .cursor { display: none; }
+}
+
+/* ============================================================
+   POLISH PASS — the last 5%: focus, balance, touch, legibility
+   ============================================================ */
+
+/* on-brand keyboard focus rings (terra works on both cream + espresso) */
+a:focus-visible, button:focus-visible,
+.btn:focus-visible, .nav-cta:focus-visible, .btn-link:focus-visible,
+.lang a:focus-visible, .channel:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+/* mouse users keep the clean look; only keyboard gets the ring */
+a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+
+/* kill headline widows/orphans, soften body wrapping */
+h1.hero-title, .section-title, .bundle-headline, .contact-title,
+.sku-name, .why-title, .step h3, .price-name {
+  text-wrap: balance;
+}
+.hero-sub, .bundle-sub, .contact-lead, .price-note, .why-body, .sku-desc {
+  text-wrap: pretty;
+}
+
+/* mobile: real 44px touch targets */
+@media (max-width: 760px) {
+  .lang a { padding: 10px 11px; }
+  .nav-cta { padding: 12px 18px; }
+  .btn-link { padding: 11px 0; }
+  .channel { padding: 22px 0; }
 }
