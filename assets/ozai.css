@@ -141,7 +141,7 @@ h1.hero-title { font-family: var(--display); font-weight: 340; font-size: clamp(
 h1.hero-title em { font-style: italic; font-weight: 420; color: var(--terra); }
 h1.hero-title .light { color: var(--ink-mute); font-weight: 300; }
 .w { display: inline-block; overflow: hidden; vertical-align: top; }
-.w > span { display: inline-block; transform: translateY(106%); animation: word-rise 0.95s var(--ease-out-expo) forwards; }
+.w > span { display: inline-block; }
 @keyframes word-rise { to { transform: translateY(0); } }
 .hero-sub { margin-top: 34px; font-size: clamp(17px, 1.55vw, 21px); line-height: 1.5; max-width: 540px; color: var(--ink-soft); }
 .hero-actions { margin-top: 42px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -307,16 +307,22 @@ footer { padding: 52px 0 40px; border-top: 1px solid var(--line); background: va
 .footer-legal strong { color: var(--ink-soft); font-weight: 500; }
 .footer-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-align: right; line-height: 1.8; }
 
-/* ---------- REVEAL ---------- */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease-out-expo), transform .9s var(--ease-out-expo); }
-.reveal.in { opacity: 1; transform: translateY(0); }
-.stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease-out-expo), transform .8s var(--ease-out-expo); }
-.stagger.in > * { opacity: 1; transform: translateY(0); }
-.stagger.in > *:nth-child(2) { transition-delay: .08s; }
-.stagger.in > *:nth-child(3) { transition-delay: .16s; }
-.stagger.in > *:nth-child(4) { transition-delay: .24s; }
-.stagger.in > *:nth-child(5) { transition-delay: .32s; }
-.stagger.in > *:nth-child(6) { transition-delay: .40s; }
+/* ---------- REVEAL ----------
+   Progressive enhancement: content is VISIBLE by default. The hidden-then-reveal
+   only applies where scripting is available, so no-JS / crawler / slow-JS users
+   always get the full offer + pricing. Utility over decoration. */
+@media (scripting: enabled) {
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease-out-expo), transform .9s var(--ease-out-expo); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease-out-expo), transform .8s var(--ease-out-expo); }
+  .stagger.in > * { opacity: 1; transform: translateY(0); }
+  .stagger.in > *:nth-child(2) { transition-delay: .08s; }
+  .stagger.in > *:nth-child(3) { transition-delay: .16s; }
+  .stagger.in > *:nth-child(4) { transition-delay: .24s; }
+  .stagger.in > *:nth-child(5) { transition-delay: .32s; }
+  .stagger.in > *:nth-child(6) { transition-delay: .40s; }
+  .w > span { transform: translateY(106%); animation: word-rise 0.95s var(--ease-out-expo) forwards; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -357,4 +363,12 @@ h1.hero-title, .section-title, .bundle-headline, .contact-title,
   .nav-cta { padding: 12px 18px; }
   .btn-link { padding: 11px 0; }
   .channel { padding: 22px 0; }
+}
+
+/* Futurism-without-slop: instrument precision. Numbers read as a spec sheet,
+   not prose. Tabular figures keep every price column optically aligned. */
+.sku-price-amount, .price-monthly, .price-setup, .bundle-row-value,
+.hero-meta dd, .tier, .lead-rank {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }
